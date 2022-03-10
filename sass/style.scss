@@ -34,12 +34,25 @@ body {
   text-transform: uppercase;
   font-family: $font-header;
   font-weight: 600;
-  span {
-    text-transform: none;
-    font-weight: 400;
-    color: lighten($color-dark, 20%);
-  }
+    a{
+        text-decoration: none;
+        
+        span {
+            text-transform: none;
+            font-weight: 400;
+            color: lighten($color-dark, 20%);
+        }  
+        
+    }
 }
+
+span{
+    
+    &:hover{
+        color: rgb(0, 255, 42);
+    }
+}
+
 
 /* Layout */
 
@@ -118,3 +131,7 @@ body {
     margin: 0 10px 0 0;
   }
 }
+
+/* new */
+
+
