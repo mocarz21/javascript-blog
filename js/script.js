@@ -2,7 +2,6 @@
 const titleClickHandler = function(event){
     event.preventDefault();
     const clickedElement = this;
-    console.log('Link was clicked!');
     console.log(event)
 
     /* [Done] remove class 'active' from all article links  */
@@ -12,27 +11,27 @@ const titleClickHandler = function(event){
     for(let activeLink of activeLinks )
         activeLink.classList.remove('active');
 
-        /* [Done] add class 'active' to the clicked link */
+    /* [Done] add class 'active' to the clicked link */
 
     clickedElement.classList.add('active');
 
-  /* [Done] remove class 'active' from all articles */
+    /* [Done] remove class 'active' from all articles */
    const activeArticles=document.querySelectorAll('.posts article.active');
 
   for(let activeArticle of activeArticles)
     activeArticle.classList.remove('active');
 
-  /* [Done] get 'href' attribute from the clicked link */
+    /* [Done] get 'href' attribute from the clicked link */
 
   let atrybut = clickedElement.getAttribute('href');
   console.log('atrybut: ', atrybut)
 
-  /*[Done] find the correct article using the selector (value of 'href' attribute) */
+    /*[Done] find the correct article using the selector (value of 'href' attribute) */
   const correctArticle = document.querySelector(atrybut)
   console.log('atrybut: ', correctArticle)
 
 
-  /* [Done] add class 'active' to the correct article */
+    /* [Done] add class 'active' to the correct article */
   correctArticle.classList.add('active');
 
 }
@@ -62,18 +61,20 @@ function generateTitleLinks(){
         let titlename= titleFind.innerHTML;
         
     
-        /* create HTML of the link */
+    /* create HTML of the link */
 
         const html ='<li><a href=#'+ articleId +'"><span>'+ titlename + '</span></a></li>'
         
     
 
-        /* insert link into titleList */
-        /*
-        titleSelector.innerHTML= titleSelector + html; 
-        */
-        titleSelector.insertAdjacentHTML("beforeend", html);
+    /* insert link into titleList */
         
+        titleSelector.innerHTML= titleSelector + html; 
+
+    /*
+        titleSelector.insertAdjacentHTML("beforeend", html);
+    */
+
         console.log('titlelist: ', titleSelector);
 
     }

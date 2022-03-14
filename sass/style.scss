@@ -16,7 +16,7 @@ $font-text: 'Source Sans Pro', sans-serif;
 }
 
 body {
-  background: $color-light;
+  background: aqua;
   font-family: $font-text;
   color: $color-dark;
   font-weight: 300;
@@ -76,7 +76,7 @@ span{
 }
 
 .sidebar, .posts {
-  background: $color-light;
+  background: rgb(0, 136, 160);
   margin-right: 10px;
   padding: 40px;
   border: 1px solid $color-dark;
@@ -87,7 +87,7 @@ span{
 
 .logo {
   font-family: $font-logo;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 104px;
   line-height: 1;
   text-align: center;
@@ -99,6 +99,7 @@ span{
   list-style-type: none;
   margin: 0;
   padding: 0;
+  font-size: 25px;
   .active {
     font-weight: bold;
   }
@@ -122,8 +123,15 @@ span{
 
 .post {
   display: none;
+  background-color: aqua;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 25px;
   &.active {
     display: block;
+
+    
+
   }
 }
 

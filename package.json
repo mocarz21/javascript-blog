@@ -12,6 +12,7 @@
     "init:gitignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o .gitignore",
     "test": "npm-run-all test:*",
     "test:html": "html-validate *.html",
+    "test:js":"eslint *.js",
     "build:sass": "sass --style=compressed --no-source-map sass:css",
     "build:autoprefixer": "postcss css/*.css --use autoprefixer -d css",
     "build": "npm-run-all build:* && npm run test",
@@ -19,6 +20,7 @@
     "build-dev": "npm run build-dev:sass && npm run build:autoprefixer",
     "watch:browsersync": "browser-sync start --server --files \"css/*.css\" \"*.html\" \"js/*.js\"",
     "watch:sassprefixer": "onchange sass/*.scss -- npm run build-dev",
+    
     "watch": "npm-run-all build:* build-dev -p watch:*"
   },
   "keywords": [],
@@ -27,6 +29,7 @@
   "devDependencies": {
     "autoprefixer": "^10.2.4",
     "browser-sync": "^2.26.3",
+    "eslint": "^8.11.0",
     "html-validate": "^6.4.0",
     "mkdirp": "^1.0.4",
     "npm-run-all": "^4.1.5",
