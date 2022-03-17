@@ -16,7 +16,7 @@ $font-text: 'Source Sans Pro', sans-serif;
 }
 
 body {
-  background: aqua;
+  background: rgb(182, 177, 173);
   font-family: $font-text;
   color: $color-dark;
   font-weight: 300;
@@ -76,7 +76,7 @@ span{
 }
 
 .sidebar, .posts {
-  background: rgb(0, 136, 160);
+  background: rgb(188, 192, 163);
   margin-right: 10px;
   padding: 40px;
   border: 1px solid $color-dark;
@@ -123,7 +123,7 @@ span{
 
 .post {
   display: none;
-  background-color: aqua;
+  background-color: rgb(156, 85, 27)a;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 25px;
