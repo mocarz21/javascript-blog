@@ -72,6 +72,7 @@ span{
 }
 
 .posts {
+  position: relative;
   flex: 2 0 0;
 }
 
@@ -108,6 +109,10 @@ span{
 .list-horizontal {
   li {
     display: inline-block;
+    a{
+      margin: 10px;
+
+    }  
   }
 }
 
@@ -122,14 +127,16 @@ span{
 /* Post */
 
 .post {
-  display: none;
+  position: absolute;
+  opacity: 0;
   background-color: rgb(156, 85, 27)a;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 25px;
+  transition: opacity  2s;
   &.active {
-    display: block;
-
+    opacity: 1;
+    z-index: 1;
     
 
   }
