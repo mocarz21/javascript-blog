@@ -127,7 +127,7 @@ generateTags();
 
 const tagClickHandler = function (event) {
   /* prevent default action for this event */
-  event.preventdefoult();
+  event.preventDefoult();
   
   /* make new constant named "clickedElement" and give it the value of "this" */
   const clickedElement = this;
@@ -169,16 +169,101 @@ generateTitleLinks();
 
 const addClickListenersToTags = function(){
 /* find all links to tags */
-  const allLinks =document.querySelectorAll('a[href^="#tag-"]');
+  const allLinks =document.querySelectorAll('a[href^="#tag-"]');          //czemu w console.log nic mi nie pokazuje
   
   /* START LOOP: for each link */
   for(let allLink of allLinks){
         
     /* add tagClickHandler as event listener for that link */
     allLink.addEventListener('click' , tagClickHandler);
-    /*console.log('allLinks :' + allLink);*/                            // czemu nie działa ?
+    /*console.log('allLinks :' + allLinks);*/                            // czemu nie działa ?
     /* END LOOP: for each link */
   }
 };
 addClickListenersToTags();
+
+const generateAuthors = function(){
+  /* find all articles */
+  const articles = document.querySelectorAll('.post');
+
+  /* START LOOP: for every article: */
+  for(let article of articles){
+
+    /* find tags wrapper */
+    const authorWrapper = article.querySelector('.sidebar .list');
+    
+    /* make html variable with empty string */
+    let html ='';
+
+    /* get tags from data-tags attribute */
+    let dataAuthor = article.getAttribute('data-author');
+
+    /* generate HTML of the link */
+    const htmlLink = '<li><a href="#author-' + dataAuthor +'"><span>' + dataAuthor +'</span></a></li>';
   
+    /* add generated code to html variable */
+    html=htmlLink + html;
+    
+    /* insert HTML of all the links into the tags wrapper */
+    authorWrapper.innerHTML = html;
+  /* END LOOP: for every article: */
+  }
+};
+generateAuthors();
+
+const authorClickHandler = function(event){
+  event.preventdefoult();
+
+  const clickedElement= this;
+
+  /* make a new constant "href" and read the attrib ute "href" of the clicked element */
+  const href = clickedElement.getAttribute('href');
+
+  /* make a new constant "author" and extract author from the "href" constant */
+  const author = href.replace('#author-', '');
+
+  /* find all autor links with class active */
+  const autorLinksActive = document.querySelectorAll('a.active[href^="#author-"]'); //czemu zapis a.active ? nie moze byc .active a[]
+
+  /* START LOOP: for each active author link */
+  for(let authorLinkActive of autorLinksActive){
+
+    /* remove class active */
+    authorLinkActive.classList.remove('active');
+  }
+
+  /* find all author links with "href" attribute equal to the "href" constant */
+  const autorLinks = document.querySelectorAll('a.active[href^="#author-]' + href +'"');
+
+  /* START LOOP: for each found author link */
+  for(let authorLink of autorLinks){
+
+    /* add class active */
+    authorLink.classList.add('active');
+
+    /* END LOOP: for each found author link */
+  }
+
+  /* execute function "generateTitleLinks" with article selector as argument */
+  generateTitleLinks('[data-author="' + author + '"]');
+};
+
+
+
+
+const addClickListenersToAuthors = function(){
+
+  /* find all links to authors */
+
+  const authorLinks= document.querySelectorAll('.post-author .a');     //jak sprawdzic czy działa ?
+  
+  /* START LOOP: for each link */
+  for(let authorLink of authorLinks){
+
+    /* add authorClickHandler as event listener for that link */
+    authorLink.addEventListener('click', authorClickHandler);
+    /* END LOOP: for each link */
+  }
+  
+};
+addClickListenersToAuthors();
