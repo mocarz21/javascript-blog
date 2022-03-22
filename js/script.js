@@ -39,7 +39,7 @@ function generateTitleLinks(customSeelector=''){
 
   /* find all the articles and save them to variable: articles */
   const articles= document.querySelectorAll('.post' + customSeelector); //Analiza filtrowania (niewiem co sie zmienilo po dodaniu customSeelector)
-  console.log('custom selector ', articles);
+  
 
   let html = '';
 
@@ -81,8 +81,8 @@ generateTitleLinks();
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list';
-
+  optArticleTagsSelector = '.post-tags .list',
+  optTagsListSelector = '.tags.list';
 function generateTags(){
 
   /* find all articles */
@@ -127,20 +127,20 @@ generateTags();
 
 const tagClickHandler = function (event) {
   /* prevent default action for this event */
-  event.preventDefoult();
+  event.preventDefault();
   
   /* make new constant named "clickedElement" and give it the value of "this" */
   const clickedElement = this;
   
   /* make a new constant "href" and read the attribute "href" of the clicked element */
-  const href = clickedElement.getatribute('href');
+  const href = clickedElement.getAttribute('href');
   
   
   /* make a new constant "tag" and extract tag from the "href" constant */
   const tag = href.replace('#tag-', '');
   
   /* find all tag links with class active */
-  const activeLinks = document.querySelectorAll('a.active[href^=#tag-"]');
+  const activeLinks = document.querySelectorAll('a.active[href^="#tag-"]');
    
   /* START LOOP: for each active tag link */
   for(let activeLink of activeLinks){
@@ -185,34 +185,35 @@ addClickListenersToTags();
 const generateAuthors = function(){
   /* find all articles */
   const articles = document.querySelectorAll('.post');
-
+ 
   /* START LOOP: for every article: */
   for(let article of articles){
 
     /* find tags wrapper */
-    const authorWrapper = article.querySelector('.sidebar .list');
-    
+    const authorWrapper = article.querySelector('a.post[href^="#author-"]');
+    console.log('aa' , authorWrapper);
     /* make html variable with empty string */
     let html ='';
 
     /* get tags from data-tags attribute */
     let dataAuthor = article.getAttribute('data-author');
-
+    
     /* generate HTML of the link */
     const htmlLink = '<li><a href="#author-' + dataAuthor +'"><span>' + dataAuthor +'</span></a></li>';
-  
+    
     /* add generated code to html variable */
     html=htmlLink + html;
     
     /* insert HTML of all the links into the tags wrapper */
     authorWrapper.innerHTML = html;
+    
   /* END LOOP: for every article: */
   }
 };
 generateAuthors();
 
 const authorClickHandler = function(event){
-  event.preventdefoult();
+  event.preventDefault();
 
   const clickedElement= this;
 
@@ -221,7 +222,7 @@ const authorClickHandler = function(event){
 
   /* make a new constant "author" and extract author from the "href" constant */
   const author = href.replace('#author-', '');
-
+  console.log('autor :' , author);
   /* find all autor links with class active */
   const autorLinksActive = document.querySelectorAll('a.active[href^="#author-"]'); //czemu zapis a.active ? nie moze byc .active a[]
 
@@ -267,3 +268,6 @@ const addClickListenersToAuthors = function(){
   
 };
 addClickListenersToAuthors();
+
+
+
