@@ -94,10 +94,9 @@ const optArticleSelector = '.post',
   optArticleTagsSelector = '.post-tags .list',
   optTagsListSelector = '.tags.list';
 function generateTags(){
-  /* [NEW] create a new variable allTags with an empty array */
-  let allTags = [];
-
-
+  /* [NEW] create a new variable allTags with an empty object */
+  let allTags = {};
+console.log(allTags)
   /* find all articles */
   const articles=document.querySelectorAll(optArticleSelector);
 
@@ -105,7 +104,7 @@ function generateTags(){
   for(let article of articles){
 
     /* find tags wrapper */
-    const articleList= article.querySelector(optArticleTagsSelector);
+    const articleList= article.querySelector(optArticleTagsSelector);  // po co ?
     
     /* make html variable with empty string */
     let html = '';
@@ -126,10 +125,13 @@ function generateTags(){
       html = html + htmlLink ;
       
       /* [NEW] check if this link is NOT already in allTags */
-      if(allTags.indexOf(htmlLink) == -1){
+      if(!allTags[tag]){
 
-        /* [NEW] add generated code to allTags array */
-        allTags.push(htmlLink);
+        /* [NEW] add tag to allTags object */
+        allTags[tag] = 1;
+      } else {
+        allTags[tag]++;
+        
       }
 
       /* END LOOP: for each tag */
@@ -145,7 +147,21 @@ function generateTags(){
   const tagList = document.querySelector(optTagsListSelector);
 
   /* [NEW] add html from allTags to tagList */
-  tagList.innerHTML = allTags.join(' ');
+  // tagList.innerHTML = allTags.join(' ');
+  
+  /* [NEW] create variable for all links HTML code */
+  let allTagsHTML = '';
+
+  /* [NEW] START LOOP: for each tag in allTags: */
+  for(let tag in allTags){
+    /* [NEW] generate code of a link and add it to allTagsHTML */
+    allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+    allTagsHTML += '<li><a href=#tag-' + tag + '><span>' + tag + ' (' + allTags[tag] + ') ' + '</span></a></li>'; // wiem co za co odpowiada ale nie wiem skad wynika ?
+    /* [NEW] END LOOP: for each tag in allTags: */
+  }
+  
+  /*[NEW] add HTML from allTagsHTML to tagList */
+  tagList.innerHTML = allTagsHTML;
 
 }
 generateTags();
@@ -231,7 +247,6 @@ const generateAuthors = function(){
 
     /* find tags wrapper */
     const authorWrapper = article.querySelector('.post a[href^="#author-"]');  //po co ta linia kodu ?
-    console.log('aa' , authorWrapper); 
     /* make html variable with empty string */
     
 
@@ -244,10 +259,10 @@ const generateAuthors = function(){
     /* add generated code to html variable */
     html=html + htmlLink ;
     
-    /* insert HTML of all the links into the tags wrapper */
+    /* insert HTML of all the links into the tags wrapper */  //??????????????????????????????????
     
     
-    console.log('aa' + html); 
+    
   /* END LOOP: for every article: */
   }
   authorList.innerHTML = html;
@@ -264,7 +279,7 @@ const authorClickHandler = function(event){
 
   /* make a new constant "author" and extract author from the "href" constant */
   const author = href.replace('#author-', '');
-  console.log('autor :' , author);
+ 
   /* find all autor links with class active */
   const autorLinksActive = document.querySelectorAll('a.active[href^="#author-"]'); //czemu zapis a.active ? nie moze byc .active a[]
 
