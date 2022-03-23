@@ -186,14 +186,20 @@ const generateAuthors = function(){
   /* find all articles */
   const articles = document.querySelectorAll('.post');
  
+
+  const authorList = document.querySelector('.sidebar .authors');
+  let html ='';
+
+
+
   /* START LOOP: for every article: */
   for(let article of articles){
 
     /* find tags wrapper */
-    const authorWrapper = article.querySelector('a.post[href^="#author-"]');
-    console.log('aa' , authorWrapper);
+    const authorWrapper = article.querySelector('.post a[href^="#author-"]');  //po co ta linia kodu ?
+    console.log('aa' , authorWrapper); 
     /* make html variable with empty string */
-    let html ='';
+    
 
     /* get tags from data-tags attribute */
     let dataAuthor = article.getAttribute('data-author');
@@ -202,13 +208,15 @@ const generateAuthors = function(){
     const htmlLink = '<li><a href="#author-' + dataAuthor +'"><span>' + dataAuthor +'</span></a></li>';
     
     /* add generated code to html variable */
-    html=htmlLink + html;
+    html=html + htmlLink ;
     
     /* insert HTML of all the links into the tags wrapper */
-    authorWrapper.innerHTML = html;
     
+    
+    console.log('aa' + html); 
   /* END LOOP: for every article: */
   }
+  authorList.innerHTML = html;
 };
 generateAuthors();
 
