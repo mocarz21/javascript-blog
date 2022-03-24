@@ -153,3 +153,30 @@ span{
 }
 
 /* new */
+.tag-size-1{
+  font-size: 10px;
+  color:rgb(64, 45, 133)
+}
+.tag-size-2{
+  font-size: 15px;
+  color:rgb(219, 150, 22)
+}
+.tag-size-3{
+  font-size: 20px;
+  color:rgb(158, 34, 121)
+}
+.tag-size-4{
+  font-size: 25px;
+  color:rgb(216, 25, 50)
+}
+.tag-size-5{
+  font-size: 30px;
+  color:rgb(4, 75, 16)
+}
+.tags{
+  
+  li{
+    display: inline-block;
+    margin: 10px;
+  }
+}
