@@ -2,7 +2,8 @@ const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
   articleAuthor: Handlebars.compile(document.querySelector('#template-article-author').innerHTML),
   articleTag: Handlebars.compile(document.querySelector('#template-article-tag').innerHTML),
-  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
+  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
+  tagCloudAutor: Handlebars.compile(document.querySelector('#template-tag-cloud-authors').innerHTML)  
 };
 
 
@@ -61,7 +62,7 @@ function generateTitleLinks(customSeelector=''){
   titleSelector.innerHTML='';
 
   /* find all the articles and save them to variable: articles */
-  const articles= document.querySelectorAll('.post' + customSeelector); //Analiza filtrowania (niewiem co sie zmienilo po dodaniu customSeelector)
+  const articles= document.querySelectorAll('.post' + customSeelector); 
   
 
   let html = '';
@@ -128,7 +129,7 @@ const calculateTagClass = function(count , params){
   const normalizedMax = params.max - params.min;
   const percentage = normalizedCount / normalizedMax;
   const classNumber = Math.floor(percentage*(opts.cloudClassCount - 1) + 1);
-  return opts.cloudClassPrefix + classNumber;               //gdzie znajduje się wstwienie tego w cllasList ?
+  return opts.cloudClassPrefix + classNumber;               
 
 };
 
@@ -145,7 +146,7 @@ function generateTags(){
   for(let article of articles){
 
     /* find tags wrapper */
-    const articleList= article.querySelector(opts.articleTagsSelector);  // po co ?
+    const articleList= article.querySelector(opts.articleTagsSelector);  
     
     /* make html variable with empty string */
     let html = '';
@@ -161,6 +162,7 @@ function generateTags(){
       
       /* generate HTML of the link */
       //const linkHTML = '<li><a href=#tag-' + tag + '><span>' + tag + '</span></a></li>';
+      //<li> <a href="#tag-{{ id }}"><span>{{ tagName }}</span></a></li>
       const linkHTMLData = {id: tag, tagName: tag};
         const linkHTML = templates.articleTag(linkHTMLData);
       
@@ -203,8 +205,10 @@ function generateTags(){
     /* [NEW] generate code of a link and add it to allTagsHTML */
     
     //allTagsHTML += '<li><a href=#tag-' + tag + '><span>' + tag + ' (' + allTags[tag] + ') ' + '</span></a></li>'; 
-    const tagLinkHTML = '<li><a href=#tag-' + tag + ' class="' +  calculateTagClass(allTags[tag], tagsParams) + '"<span>' +  tag  + '</a></li>';
-
+    //const tagLinkHTML = '<li><a href=#tag-' + tag + ' class="' +  calculateTagClass(allTags[tag], tagsParams) + '"<span>' +  tag  + '</span></a></li>';
+    
+    
+    
     
     //allTagsHTML += tagLinkHTML;
     allTagsData.tags.push({
@@ -220,7 +224,7 @@ function generateTags(){
   /*[NEW] add HTML from allTagsHTML to tagList */
   //tagList.innerHTML = allTagsHTML;
   tagList.innerHTML = templates.tagCloudLink(allTagsData);
-  console.log('sadasd' ,allTagsData)
+  
 
 }
 generateTags();
@@ -269,14 +273,14 @@ generateTitleLinks();
 
 const addClickListenersToTags = function(){
 /* find all links to tags */
-  const allLinks =document.querySelectorAll('a[href^="#tag-"]');          //czemu w console.log nic mi nie pokazuje
+  const allLinks =document.querySelectorAll('a[href^="#tag-"]');          
   
   /* START LOOP: for each link */
   for(let allLink of allLinks){
         
     /* add tagClickHandler as event listener for that link */
     allLink.addEventListener('click' , tagClickHandler);
-    /*console.log('allLinks :' + allLinks);*/                            // czemu nie działa ?
+    /*console.log('allLinks :' + allLinks);*/                            
     /* END LOOP: for each link */
   }
 };
@@ -294,7 +298,7 @@ const calculateAuthorsParams = function(authors){
     params.max = Math.max(authors[author], params.max);
     params.min = Math.min(authors[author], params.min);
   }
-  console.log('max  A' + params.max + '  min  A' + params.min);
+
   return params;
 };
 
@@ -304,7 +308,7 @@ const calculateAutorClass = function(count , params){
   const normalizedMax = params.max - params.min;
   const percentage = normalizedCount / normalizedMax;
   const classNumber = Math.floor(percentage*(opts.cloudClassCount -1 ) + 1);
-  return opts.cloudClassPrefix + classNumber;               //gdzie znajduje się wstwienie tego w cllasList ?
+  return opts.cloudClassPrefix + classNumber;               
 
 };
 
@@ -336,11 +340,12 @@ const generateAuthors = function(){
     
     /* generate HTML of the link */
     //const linkHTML = '<li><a href="#author-' + dataAuthor +'"><span>' + dataAuthor +'</span></a></li>';
+    
     const linkHTMLData = {id: dataAuthor, authorName: dataAuthor};
     const linkHTML = templates.articleAuthor(linkHTMLData);
     /* add generated code to html variable */
     html=html + linkHTML ;
-
+    
     /* [NEW] check if this link is NOT already in allTags */
     if(!allAutors[dataAuthor]){
 
@@ -359,33 +364,45 @@ const generateAuthors = function(){
   }
   /* [NEW] find list of author in right column */
   const authorList = document.querySelector(opts.authorsListSelector);
-
+  
   /* [NEW] add html from allTags to tagList */
   // tagList.innerHTML = allTags.join(' ');
   
   /* [NEW] create variable for all links HTML code */
   const autorParams = calculateAuthorsParams(allAutors);
   
-  let allAutorsHTML = '';
-
+  //let allAutorsHTML = '';
+  allAutorsData = {autor: []};                                             
+  
   /* [NEW] START LOOP: for each tag in allTags: */
   for(let autor in allAutors){
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    console.log('autor : ' + autor);
-    //allTagsHTML += '<li><a href=#tag-' + tag + '><span>' + tag + ' (' + allTags[tag] + ') ' + '</span></a></li>'; 
-    const autorLinkHTML = '<li><a href="#author-' + autor + '" class="' +  calculateAutorClass(allAutors[autor], autorParams) + '"<span>' +  autor  + '(' + allAutors[autor] + ')' + '</span></a></li>';
-    console.log('autor : ' + autorLinkHTML);
-    allAutorsHTML += autorLinkHTML;
-    console.log(autorLinkHTML);
+    
+    
+    //const autorLinkHTML = '<li><a href="#author-' + autor + '" class="' +  calculateAutorClass(allAutors[autor], autorParams) + '"<span>' +  autor  + '(' + allAutors[autor] + ')' + '</span></a></li>';
+    
+    allAutorsData.autor.push({
+      autor: autor,
+      count: allAutors[autor],
+      className: calculateAutorClass(allAutors[autor], autorParams),
+    });
+
+    
+
+    //allAutorsHTML += autorLinkHTML;
+    //console.log('aaaaa ' , allAutorsHTML)
     /* [NEW] END LOOP: for each tag in allTags: */
   }
   
-  authorList.innerHTML = allAutorsHTML;
+  //authorList.innerHTML = allAutorsHTML;
+  authorList.innerHTML = templates.tagCloudAutor(allAutorsData);
+  console.log('asda' ,  authorList)
+  
 };
 generateAuthors();
 
 const authorClickHandler = function(event){                 
-  event.preventDefault();                                 //czemu nie działa ?
+  event.preventDefault();                                 
 
   const clickedElement= this;
 
@@ -394,9 +411,9 @@ const authorClickHandler = function(event){
 
   /* make a new constant "author" and extract author from the "href" constant */
   const author = href.replace('#author-', '');
-  console.log('autor : ' + author);                                                  //czemu console.log nie działa ??
+  console.log('autor : ' + author);                                                  
   /* find all autor links with class active */
-  const autorLinksActive = document.querySelectorAll('a.active[href^="#author-"]'); //czemu zapis a.active ? nie moze byc .active a[]
+  const autorLinksActive = document.querySelectorAll('a.active[href^="#author-"]'); 
   console.log('autor links active : ' + autorLinksActive);
   /* START LOOP: for each active author link */
   for(let authorLinkActive of autorLinksActive){
@@ -429,11 +446,11 @@ const addClickListenersToAuthors = function(){
 
   /* find all links to authors */
 
-  const authorLinks= document.querySelectorAll('.post-author .a');     //jak sprawdzic czy działa ?
+  const authorLinks= document.querySelectorAll('.post-author a');     
   
   /* START LOOP: for each link */
   for(let authorLink of authorLinks){
-
+    
     /* add authorClickHandler as event listener for that link */
     authorLink.addEventListener('click', authorClickHandler);
     /* END LOOP: for each link */
@@ -441,7 +458,5 @@ const addClickListenersToAuthors = function(){
   
 };
 addClickListenersToAuthors();
-                                        //nie działa filtrowanie autorów  czemu ????"globals": {
-                                         //"Handlebars": false
-
+                                       
 

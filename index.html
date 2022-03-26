@@ -194,7 +194,7 @@
               </ul>
               <h2 class="section-title">Authors</h2>
               <ul class="list authors">
-                
+
               </ul>
             </aside>
           </main>
@@ -204,14 +204,19 @@
         <li><a href="#{{ id }}"><span>{{ title }}</span></a></li>
       </script>
       <script id="template-article-tag" type="text/x-handlebars-template">
-        <li></li> <a href="#{{ id }}"><span>{{ title }}</span></a></li>
+        <li> <a href="#tag-{{ id }}"><span>{{ tagName }}</span></a></li>
       </script>
       <script id="template-article-author" type="text/x-handlebars-template">
-        <li><a href="#{{ id }}"><span>{{ title }}</span></a></li>
+        <li><a href="#author-{{ id }}"><span>{{ authorName }}</span></a></li>
       </script>
       <script id="template-tag-cloud-link" type="text/x-handlebars-template">
         {{#each tags}}
-        <li     class= <span>{{class-tag}}</span>                     {{ tag }}</li>
+        <li><a href="#tag-{{ tag }}" class="{{ className }}"> <span> {{ tag }} </span></a></li>
+        {{/each}}
+      </script>
+      <script id="template-tag-cloud-authors" type="text/x-handlebars-template">
+        {{#each tags}}
+        <li><a href="#author-{{ autor }}" class="{{ className }}"> <span> {{ autor }} ({{ count }}) </span></a></li>
         {{/each}}
       </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
